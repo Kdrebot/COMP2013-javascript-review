@@ -103,27 +103,27 @@ console.log(student0.highSchool);
 *4
 Deconstruction of an object creating variables with same studentNames of keys with the assigned values 
  */
-let{highSchool, id, studentName, tuitionPaid} = student0;
+let { highSchool, id, studentName, tuitionPaid } = student0;
 console.log(highSchool);
 /*
  *5
 Rest operator (...) is used to assign the rest of the data to a new object
  */
 
-
-
 /**
  *6
  Spread operator (...) to spread keys of an object in a new object
  */
-const newStudent = {...student0};
+const newStudent = { ...student0 };
 console.log(newStudent.id);
 /**
  *7
  Template literals is creating strings with JS code embedded like variables or statements
  using back tick (`) operator
  */
-console.log(`${student0.studentName} has paid ${student0.tuitionPaid} in tuition fees`);
+console.log(
+  `${student0.studentName} has paid ${student0.tuitionPaid} in tuition fees`,
+);
 /**
  *8
  * Arrow function is used to replace the old function declaration. Best used for one liner functions (lambda functions)
@@ -131,7 +131,7 @@ console.log(`${student0.studentName} has paid ${student0.tuitionPaid} in tuition
 
 //old function declaration method
 
-function oldFunction(){
+function oldFunction() {
   return "This is the original way of writing a function in JS";
 }
 
@@ -139,7 +139,7 @@ function oldFunction(){
 
 const arrowFunction = (name) => {
   return `This is the way of writing an arrow function in JS that belongs to ${name}`;
-}
+};
 
 console.log(arrowFunction("John Doe"));
 
@@ -149,24 +149,23 @@ console.log(arrowFunction("John Doe"));
 const lambdaFunction = (num1, num2) => num1 + num2;
 console.log(lambdaFunction(7, 9));
 
-
 /**
  *8
  Ternaries are short, one liners, if/else statements 
  */
 
 //normal if statement:
-if(student0.studentName === "Johnny Doe"){
+if (student0.studentName === "Johnny Doe") {
   console.log("Hello Johnny Doe");
-}
-else if(student0.studentName === "John Doe"){
+} else if (student0.studentName === "John Doe") {
   console.log("Hello John Doe");
-}
-else{
+} else {
   console.log("Hello Stranger");
 }
 
-console.log(student0.studentName === "Johnny Doe" ? "Hello Johnny Doe" : "Hello Stranger");
+console.log(
+  student0.studentName === "Johnny Doe" ? "Hello Johnny Doe" : "Hello Stranger",
+);
 
 /**
  *9
@@ -188,14 +187,34 @@ console.log(student0.studentName === "Johnny Doe" ? "Hello Johnny Doe" : "Hello 
  stored in a new collection (array or object)
  */
 
+const numArray = [10, 12, 6, 55, 39];
+const newMappedArray = numArray.map((num) => num * 2);
+console.log(newMappedArray);
+
 //to get all students names in a new array
+
+const studentNames = data.map((student) => student.studentName); //new way of mapping using =>
+console.log(studentNames);
+
+const studentTuition = data.map(function (student) {
+  return student.tuitionPaid;
+}); // old way of doing things
+console.log(studentTuition);
 
 /**
  *11
  Array filter: to filter certian data in regarded to a statement stored in a new collection
  */
 
+const numsAbove15 = numArray.filter((num) => num > 15);
+console.log(numsAbove15);
+
 //Filter all students born in 2002 using filter and includes method
+
+const students2002 = data.filter((student) =>
+  student.dateOfBirth.includes("2002"),
+);
+console.log(students2002);
 
 /**
  *12
@@ -203,7 +222,18 @@ console.log(student0.studentName === "Johnny Doe" ? "Hello Johnny Doe" : "Hello 
  Ex: display the total of all students tuition paid
  */
 
+const sumNumbers = numArray.reduce(
+  (accumulator = 0, item) => accumulator + item,
+);
+console.log(sumNumbers);
+
 //the reduce method takes two parameters, the first is a callback function and the second is the initial value.
+
+const sumTuition = data.reduce((acc = 0, student) => acc + student.tuitionPaid);
+console.log(sumTuition);
+
+const funnyNums = ["1", "2", "3", "4"];
+console.log(funnyNums.reduce((acc = 0, num) => acc + num));
 
 /**
  *13
@@ -212,7 +242,21 @@ console.log(student0.studentName === "Johnny Doe" ? "Hello Johnny Doe" : "Hello 
  
  */
 
+//HAS TO BE AN ITEM NUMBER TO WORK*************
+
+const acendingNums = numArray.sort((a, b) => a - b);
+console.log(acendingNums);
+
+const decendingNums = numArray.sort((a, b) => b - a);
+console.log(decendingNums);
+
 //sort students by paid tuition
+
+const acendingTuition = data.slice().sort(
+  //slice will copy to a new array
+  (studentA, studentB) => studentA.tuitionPaid - studentB.tuitionPaid,
+);
+console.log(acendingTuition);
 
 /**
  *14
@@ -238,6 +282,16 @@ const newerStudent = {
   },
 };
 
+const newData = [...data, newerStudent];
+console.log(newData);
+
 //Remove a student object using filter method
 
+const removeStudent = newData.filter((student) => student.id !== 1001);
+console.log(removeStudent);
+
 //Update a student object using the map method
+const updateData = newData.map((student) =>
+  student.id === 3 ? { ...student, hasAttendedOrientation: true } : student,
+);
+console.log(updateData);
